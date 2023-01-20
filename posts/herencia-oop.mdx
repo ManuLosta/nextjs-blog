@@ -1,0 +1,240 @@
+---
+title: 'Herencia en Python'
+subtitle: 'Explicación breve sobre la herencia en OOP'
+date: '2023-01-20'
+image: '/images/gradient-2.jpg'
+tags: ['oop', 'python']
+---
+
+En la programación orientada a objetos, la **herencia** es el mecanismo de basar una **clase** en otra **clase**, **heredando** implementaciones similares.
+
+### Ejemplo
+
+```python
+class Animal:
+    def __init__(self):
+        self.calories = 0
+    def eat(self):
+        self.calories += 100
+    def sleep(self):
+        self.energy += 10
+
+class Dog(Animal):
+    def bark(self):
+        print("Woof Woof!")
+
+# a = Animal()
+# a.eat()
+# print(a.calories)
+
+milou = Dog()
+milou.bark()
+milou.eat(); milou.eat()
+
+print(milou.calories)
+```
+
+### Nombres
+
+- Subclass, derived class, or child class
+- Superclass, base class, or parent class
+
+## Multilevel inheritance
+
+Es la habilidad de crear una clase desde una clase que deriva de otra clase.
+
+```python
+class Animal:
+    def __init__(self):
+        self.calories = 0
+    def eat(self):
+        self.calories += 100
+    def sleep(self):
+        self.energy += 10
+
+class Mammal(Animal):
+    def legs(self):
+        return 4
+
+class Dog(Mammal):
+    def bark(self):
+        print("Woof Woof!")
+
+milou = Dog()
+milou.legs()
+```
+
+## Overriding
+
+Reemplazas un método en una subclase.
+
+```python
+class Animal:
+    def __init__(self):
+        self.calories = 0
+    def eat(self):
+        self.calories += 100
+    def sleep(self):
+        self.energy += 10
+
+class Mammal(Animal):
+    def legs(self):
+        return 4
+
+class Human(Mammal):
+    def legs(self):  # <- Override
+        return 2
+
+tintin = Human()
+tintin.legs()
+```
+
+## Final Classes and Methods
+
+No se permite que se creen sublases de una clase o que se haga un override de un método.
+
+```python
+from typing import final
+
+class Quadruped:
+    @final
+    def legs(self):
+        return 4
+
+
+class Dog(Quadruped):
+    def legs(self):    # <- mypy should give an error here
+        return 3
+```
+
+## Herencia múltiple
+
+Es la capacidad de heredar de más de una superclase.
+
+```python
+class Animal:
+   #
+
+class Mammal(Animal):
+   #
+
+class Quadruped(Animal):
+   #
+
+class Dog(Quadruped, Mamal):
+	#
+```
+
+## Invoking `__init__` & `super`
+
+```python
+class Animal:
+    name: str
+    def __init__(self, name: str):
+        self.name = name
+
+
+class Dog(Animal):
+    food: str
+    def __init__(self, name: str, food: str):
+        Animal.__init__(self, name)
+        self.food = food
+
+d = Dog("Milou", "Cookies")
+print(d.name, d.food)
+```
+
+```python
+class Animal:
+    name: str
+    def __init__(self, name: str):
+        self.name = name
+
+class Dog(Animal):
+    food: str
+    def __init__(self, name: str, food: str):
+        super().__init__(name)
+        self.food = food
+
+
+d = Dog("Milou", "Cookies")
+print(d.name, d.food)
+```
+
+## Polimorfismo
+
+En la programación orientada a objetos es la capacidad que tiene un objeto de adoptar varias formas dependiendo de la clase actual en la que se encuentra. Es decir, que dependendiendo de de qué clase sea instancia ese objeto va a tomar distintas formas y adoptar diferentes comportamientos.
+
+```python
+from typing import List
+
+class Animal:
+    def sound(self): raise ValueError("???")
+class Dog(Animal):
+    def sound(self): print("Woof Woof!")
+class Cat(Animal):
+    def sound(self): print("Meow...")
+
+#unknown = Animal()
+#unknown.sound()
+
+garfield = Cat()
+idefix = Dog()
+idefix.sound()
+garfield.sound()
+```
+
+## Clases abstractas y métodos abstractos
+
+```python
+def concert(animals: List[Animal]):
+    for a in animals:
+        a.sound()
+```
+
+El propósito de una **clase abstracta** es proporcionar una **definición común** de una clase base que pueden compartir varias clases derivadas. Una clase abstracta no puede ser instanciada.
+
+```python
+from abc import ABC, abstractmethod
+
+from typing import List
+
+class Animal(ABC):
+    @abstractmethod
+    def sound(self): pass
+
+class Dog(Animal):
+    def sound(self): print("Woof Woof!")
+
+class Cat(Animal):
+    def sound(self): print("Meow...")
+
+unknown = Animal()
+```
+
+### Ejemplo Java
+
+```java
+abstract class Animal {
+    String name;
+    Animal(String name) { this.name = name; }
+
+    abstract String sound();
+    void talk() { System.out.println(name + " says: " + sound()); }
+}
+class Dog extends Animal {
+     Dog(String name) { super(name); }
+     String sound()   { return "Woof Woof!"; }
+}
+class Cat extends Animal {
+    Cat(String name) { super(name); }
+    String sound()   { return "Meow..."; }
+}
+
+//var unknown = new Animal("Cow");
+
+var garfield = new Cat("Garfield");
+var idefix = new Dog("Idefix");
+idefix.talk();
+garfield.talk();
+```
