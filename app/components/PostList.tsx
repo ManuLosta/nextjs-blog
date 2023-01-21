@@ -7,17 +7,18 @@ export function PostList() {
 
   return (
     <>
-      {posts.map(post => (
-        <Link key={post.slug} href={`/posts/${post.slug}`} className="flex flex-row gap-3 justify-between mb-5 hover:underline transition-all">
-          <div>
-            <p className="font-semibold text-slate-800">{post.title}</p>
-            <p className="text-slate-700">{post.subtitle}</p>
-          </div>
-          <div>
-            <p>{format(parseISO(post.date), 'LLLL d, yyyy')}</p>
-          </div>
-        </Link>
-      ))
+      {
+        posts.map((post) => (
+          <Link key={post.slug} href={`/posts/${post.slug}`} className="flex flex-col sm:flex-row gap-3 justify-between mb-5 hover:underline transition-all">
+            <div>
+              <p className="font-semibold text-slate-800">{post.title}</p>
+              <p className="text-slate-700">{post.subtitle}</p>
+            </div>
+            <div>
+              <p>{format(parseISO(post.date), 'LLLL d, yyyy')}</p>
+            </div>
+          </Link>
+        ))
       }
     </>
   )

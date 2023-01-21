@@ -1,0 +1,152 @@
+---
+title: 'Sistemas de numeración'
+subtitle: 'Explicación breve sobre sistemas de numeración'
+date: '2023-01-21'
+image: '/images/gradient-1.jpg'
+tags: ['math', 'python']
+---
+
+Un sistema numérico (o sistema de numeración) es un sistema de escritura para expresar números; es decir, una notación matemática para representar números, usando dígitos u otros símbolos de manera consistente.
+
+## Sistemas posicionales
+
+Un sistema posicional es un sistema numérico en el que la contribución de un dígito al valor se basa en la posición del dígito.
+
+Ejemplo: Decimal, Binario
+
+$$
+\sum_{i=0}^{n}digit_i\cdot radix^i
+$$
+
+$$
+20|_{10}=2\cdot10^1+5\cdot10^0
+$$
+
+## Convertir a decimal
+
+```python
+from typing import List
+
+def to_decimal(number: List[int], base: int) -> int:
+    result: int = 0
+    for i, digit in enumerate(reversed(number)):
+        result += digit * base ** i
+    return result
+
+to_decimal([1, 9], 16)
+```
+
+Alt
+
+```python
+from typing import List
+
+def to_decimal(number: List[int], base: int) -> int:
+
+    return sum(digit * base ** i for i, digit in enumerate(reversed(number)))
+
+to_decimal([1, 9], 16)
+```
+
+### Convertir de decimal a otra base
+
+1. Dividir por la base y obtener el resto.
+2. Repetir hasta que el resultado de la división sea 0.
+3. Leer los restos de atras para adelante.
+
+\***\*Ejemplo $25|_{10}$ a binario:**
+
+- $25\div2=12$ resto **1**
+- $12\div2=6$ resto **0**
+- $6\div2=3$ resto **0**
+- $3\div2=1$ resto **1**
+- $1\div2=0$ resto **1**
+
+Por lo tanto, $25|_{2}=11001$
+
+### De decimal a otra base en Python
+
+```python
+from typing import List
+
+def from_decimal(number: int, base: int) -> List[int]:
+    remainders = []
+    while number > 0:
+        number, r = divmod(number, base)
+        remainders.append(r)
+    remainders.reverse()
+    return remainders
+
+from_decimal(25, 2)
+```
+
+### Otras bases en Python
+
+```python
+print(25)        # Decimal -> 25
+print(0b11001)   # Binary -> 25
+print(0b1_1001)  # Binary (Separate by nibble 4bits) -> 25
+print(0x19)      # Hexadecimal -> 25
+print(0o31)      # Octal -> 25
+```
+
+```python
+n = 73
+print(f"{n}") # -> 73
+print(f'{n:_b}') # -> 100_1001
+print(f'{n:x}') # -> 0000049
+print(f'{n:o}') # -> 111
+print(f'{n:019_b}') # -> 0000_0000_0100_1001
+```
+
+## Bitwise Operations
+
+### AND = &
+
+```python
+a = 0b1111_1100
+b = 0b0011_1111
+result = a & b
+print_binary(result)
+```
+
+### OR = |
+
+```python
+a = 0b1011_0010
+b = 0b0101_1110
+result = a | b
+print_binary(result)
+```
+
+### XOR = ^
+
+```python
+a = 0b0001_0100
+b = 0b0000_0101
+result = a ^ b
+print_binary(result)
+```
+
+### NOT = ~
+
+```python
+a = 0b0000_1111
+result = ~a
+print_binary(result & 0xFF)  # Just get the first byte
+```
+
+### Shift
+
+```python
+result = 0b111_1111 << 1
+print_binary(result)
+
+result = 0b1111_1111 >> 1
+print_binary(result)
+
+result = 0xF << 4
+print(f'{result:x}')
+
+3 << 3, 3 * 2 **3
+```

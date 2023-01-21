@@ -4,7 +4,7 @@ export function Header() {
   return (
     <header className="w-full sticky z-50 top-0 backdrop-blur p-4 flex flex-col items-center bg-slate-100/80">
       <Link href="/">
-        <h1 className="text-3xl font-bold text-slate-800">Manuel Lostaló</h1>
+        <h1 className="text-3xl font-bold text-slate-800">Losta</h1>
       </Link>
       <nav>
         <ul className="flex gap-4 my-1 text-slate-700">
