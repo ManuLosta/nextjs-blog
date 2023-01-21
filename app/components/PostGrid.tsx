@@ -5,7 +5,7 @@ export function PostGrid() {
   const posts = getPostsByDate().slice(0, 4)
 
   return (
-    <div className=" gap-10 grid md:grid-cols-2">
+    <div className="gap-4 sm:gap-10 grid md:grid-cols-2">
       {posts.map(post =>
         <PostCard key={post.slug} {...post} />
       )}
