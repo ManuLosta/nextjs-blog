@@ -7,7 +7,7 @@ export function PostGrid() {
   return (
     <div className="gap-4 sm:gap-10 grid md:grid-cols-2">
       {posts.map(post =>
-        <PostCard key={post.slug} {...post} />
+        <PostCard key={post.slug} post={post} />
       )}
     </div>
   )

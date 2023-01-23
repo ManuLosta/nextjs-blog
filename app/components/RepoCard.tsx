@@ -4,7 +4,7 @@ import { AiOutlineStar } from "react-icons/ai"
 import Link from "next/link"
 import { format, parseISO } from 'date-fns'
 
-export function RepoCard(repo: Repo) {
+export function RepoCard({ repo }: { repo: Repo }) {
   return (
     <Link href={repo.html_url} className="border sm:hover:bg-slate-50 border-slate-300 sm:hover:border-slate-600 sm:hover:shadow-lg sm:hover:scale-105 rounded-lg transition-all p-4 shadow-slate-900 flex justify-between flex-col">
       <div className="flex items-center gap-2">
@@ -18,7 +18,7 @@ export function RepoCard(repo: Repo) {
           <AiOutlineStar className="fill-slate-800" />
           <p>{repo.stargazers_count}</p>
         </div>
-        <p className="text-slate-600">Updated {format(parseISO(repo.updated_at), 'LLL d')}</p>
+        <p className="text-slate-600">{format(parseISO(repo.updated_at), 'LLL d, yy')}</p>
       </div>
     </Link>
   )

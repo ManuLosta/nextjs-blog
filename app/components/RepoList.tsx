@@ -18,7 +18,7 @@ export async function RepoList() {
   return (
     <div className="grid gap-5  sm:grid-cols-2">
       {repos.map((repo: Repo) => (
-        <RepoCard key={repo.id} {...repo} />
+        <RepoCard key={repo.id} repo={repo} />
       ))}
     </div>
   )
